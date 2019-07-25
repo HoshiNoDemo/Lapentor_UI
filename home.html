@@ -1,0 +1,211 @@
+<!-- 
+Notas:
+    Para que este código resulte, os plugins obrigatórios no Lapentor são:
+        ->Floorplan
+        ->Default UI plugins
+        ->Scene title
+        ->Floorplan
+        ->Custom code, obviamente.
+    
+    Faz copy paste do código abaixo para o Custom Code HTML.
+-->
+
+
+<!--<input class="Overlayed" id="myelement" type="button" value="PRESS ME" onmousedown="hideUI()">-->
+<input class="Overlayed" id="myelement2" type="button" value="Return to start!" onmousedown="returnToStart()">
+<div id="my-view-list" class="Overlayed">
+    aaa
+</div>
+<script>
+
+    //Setup
+    var marker_list = []
+    var current_view = ""
+    setTimeout(function(){
+        marker_list = [].slice.call(document.getElementsByClassName("thumb ng-binding ng-scope"))
+        current_view = document.getElementById("PluginScenetitle").innerText
+        //alert(current_view.innerText)
+        //It works!
+    },1000)
+
+    init()
+
+    //Hide top left list
+    hideUI()
+
+    //Initial refresh
+    setTimeout(function(){
+            refreshList()
+        },1000)
+
+    
+    function init(){
+
+
+        //Setup a onmouseup listener to check for room and floor changes
+        document.addEventListener("mouseup", function(){
+            console.log("Hello.")
+
+            //Check if current markers were changed
+            setTimeout(function(){
+                    var new_marker_list = [].slice.call(document.getElementsByClassName("map-placemarker thumb ng-scope"))
+                    
+                    if(!htmlEquals(marker_list,new_marker_list)){
+                        alert("The markers are different!")
+                    }
+
+                    var new_current_view = document.getElementById("PluginScenetitle").innerText
+                    console.log(current_view + "<->" + new_current_view)
+                    if (current_view !== new_current_view){
+                        alert("We've changed scenes!")
+                    }
+                    
+                    current_view = new_current_view
+                    marker_list = new_marker_list
+                    refreshList()
+
+                },1000)
+        })
+
+    }
+
+    function htmlEquals(a1, a2) {
+        if(a1.length !== a2.length)
+            return false;
+        for(var i = a1.length; i--;) {
+            if(a1[i].innerHTML !== a2[i].innerHTML)
+                return false;
+        }
+        return true;
+    }
+
+    function canvasEquals(a1, a2) {
+        if(a1.length !== a2.length)
+            return false;
+        for(var i = a1.data.length; i--;) {
+            if(a1[i].data !== a2[i].data)
+                return false;
+        }
+        return true;
+    }
+
+    /**
+    * Hides the top left scene selection.
+    */
+    function hideUI() {
+        var x = document.getElementById('scenelist-ghost')
+        
+        if (x.style.display === "none"){
+            x.style.display = "block"
+        } else {
+            x.style.display = "none"
+        }
+    }
+
+
+    function refreshList() {
+        div = document.getElementById("my-view-list")
+        div.innerHTML = ""
+
+        //Insert floor buttons
+        var floors = document.getElementById("PluginFloorplan")
+        floors = floors.getElementsByClassName("thumb ng-binding ng-scope")
+
+        for(var i = 0; i < floors.length; i++){
+            div.innerHTML += "<input class='Overlayed' style='left: " + (150 + (i*150)) + "px; color: cadetblue;' type='button' value=" + floors[i].innerText + " onmousedown='goToFloor(" + i + ")'>"
+        }            
+
+        //Insert view buttons
+        var markers = document.getElementById("map-floorplan")
+        markers = markers.getElementsByClassName("map-placemarker thumb ng-scope")
+
+        
+        for(var i = 0; i < markers.length; i++){
+            div.innerHTML += "<input class='Overlayed' style='top: " + (30 + (i*30)) + "px; color: grey;' type='button' value=" + markers[i].getAttribute("uib-tooltip") + " onmousedown='goToView(" + i + ")'>"
+        }
+    }
+
+    /**
+     *  Takes you to the marker of index 'num'.
+     *  
+    */
+    function goToView(num){
+        var markers = document.getElementById("map-floorplan")
+        markers = markers.getElementsByClassName("map-placemarker thumb ng-scope")
+
+        //Floor plan reset workaround
+        var floors = document.getElementById("PluginFloorplan")
+
+        floors = floors.getElementsByClassName("thumb ng-binding ng-scope")
+        floors_arr = [].slice.call(floors)
+
+        the_floor = document.getElementsByClassName("thumb ng-binding ng-scope active")[0]
+
+        idx = floors_arr.indexOf(the_floor)
+
+        markers[num].click()
+
+        setTimeout(function(){
+            floors[idx].click()
+        },100)
+
+        //Should fix the FOV being misalligned. But it doesn't.
+        /*
+        setTimeout(function(){
+            markers[num].click()
+        },500)
+        */
+
+        refreshList()
+        
+    }
+
+    /**
+     *  Takes you to the floor of index 'num'.
+     *  
+    */
+    function goToFloor(num){
+        var floors = document.getElementById("PluginFloorplan")
+        floors = floors.getElementsByClassName("thumb ng-binding ng-scope")
+
+        floors[num].click()
+
+        refreshList()
+    }
+
+    /**
+    * Hides the top right scene selection.
+    */
+    function hideUI() {
+        var x = document.getElementById('scenelist-ghost')
+        
+        if (x.style.display === "none"){
+            x.style.display = "block"
+        } else {
+            x.style.display = "none"
+        }
+    }
+
+
+    /**
+    * Resets the view to the initial floor and initial view.
+    * The order of which you insert the floors and views in the plugin matter!
+    */
+    function returnToStart() {
+        var x = document.getElementById("PluginFloorplan")
+        var y = x.getElementsByClassName("list")    
+        var z = y[0].children[0]
+    
+        z.click()
+
+        //After 100ms do this.
+        setTimeout(function(){
+            var x = document.getElementById("PluginFloorplan")
+            var y = document.getElementById("map-floorplan")
+            var z = document.getElementsByClassName("map-placemarker thumb ng-scope")
+            z[0].click()
+        },100)
+
+        refreshList()
+    }
+</script>    
