@@ -29,8 +29,8 @@ Notas:
 
     init()
 
-    //Hide top left list
-    //hideUI()
+    //Hide PART of the floorplan
+    hideUI()
 
     //Initial refresh
     setTimeout(function(){
@@ -82,13 +82,12 @@ Notas:
     * Hides the top left scene selection.
     */
     function hideUI() {
-        var x = document.getElementById('scenelist-ghost')
+        var floorplan = document.getElementById('PluginFloorPlan')
+        var x = floorplan.getElementsByClassName("list")
         
-        if (x.style.display === "none"){
-            x.style.display = "block"
-        } else {
-            x.style.display = "none"
-        }
+        x.style.display = "none"
+
+        x.style.padding_top = "0"
     }
 
 
