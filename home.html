@@ -13,9 +13,8 @@ Notas:
 
 <!--<input class="Overlayed" id="myelement" type="button" value="PRESS ME" onmousedown="hideUI()">-->
 <input class="Overlayed" id="myelement2" type="button" value="Return to start!" onmousedown="returnToStart()">
-<div id="my-view-list" class="Overlayed">
-    aaa
-</div>
+<div id="my-view-list" class="Overlayed"></div>
+
 <script>
 
     //Setup
@@ -31,7 +30,7 @@ Notas:
     init()
 
     //Hide top left list
-    hideUI()
+    //hideUI()
 
     //Initial refresh
     setTimeout(function(){
@@ -44,20 +43,20 @@ Notas:
 
         //Setup a onmouseup listener to check for room and floor changes
         document.addEventListener("mouseup", function(){
-            console.log("Hello.")
+            console.log("Initting.")
 
             //Check if current markers were changed
             setTimeout(function(){
                     var new_marker_list = [].slice.call(document.getElementsByClassName("map-placemarker thumb ng-scope"))
                     
                     if(!htmlEquals(marker_list,new_marker_list)){
-                        alert("The markers are different!")
+                        //alert("The markers are different!")
                     }
 
                     var new_current_view = document.getElementById("PluginScenetitle").innerText
                     console.log(current_view + "<->" + new_current_view)
                     if (current_view !== new_current_view){
-                        alert("We've changed scenes!")
+                        //alert("We've changed scenes!")
                     }
                     
                     current_view = new_current_view
@@ -74,16 +73,6 @@ Notas:
             return false;
         for(var i = a1.length; i--;) {
             if(a1[i].innerHTML !== a2[i].innerHTML)
-                return false;
-        }
-        return true;
-    }
-
-    function canvasEquals(a1, a2) {
-        if(a1.length !== a2.length)
-            return false;
-        for(var i = a1.data.length; i--;) {
-            if(a1[i].data !== a2[i].data)
                 return false;
         }
         return true;
@@ -112,7 +101,8 @@ Notas:
         floors = floors.getElementsByClassName("thumb ng-binding ng-scope")
 
         for(var i = 0; i < floors.length; i++){
-            div.innerHTML += "<input class='Overlayed' style='left: " + (150 + (i*150)) + "px; color: cadetblue;' type='button' value=" + floors[i].innerText + " onmousedown='goToFloor(" + i + ")'>"
+            console.log(floors[i])
+            div.innerHTML += "<input class='Overlayed' style='left: " + (150 + (i*150)) + "px; color: cadetblue;' type='button' value='" + floors[i].innerText + "' onmousedown='goToFloor(" + i + ")'>"
         }            
 
         //Insert view buttons
@@ -121,7 +111,7 @@ Notas:
 
         
         for(var i = 0; i < markers.length; i++){
-            div.innerHTML += "<input class='Overlayed' style='top: " + (30 + (i*30)) + "px; color: grey;' type='button' value=" + markers[i].getAttribute("uib-tooltip") + " onmousedown='goToView(" + i + ")'>"
+            div.innerHTML += "<input class='Overlayed' style='top: " + (30 + (i*30)) + "px; color: grey;' type='button' value='" + markers[i].getAttribute("uib-tooltip") + "' onmousedown='goToView(" + i + ")'>"
         }
     }
 
@@ -148,13 +138,6 @@ Notas:
         setTimeout(function(){
             floors[idx].click()
         },100)
-
-        //Should fix the FOV being misalligned. But it doesn't.
-        /*
-        setTimeout(function(){
-            markers[num].click()
-        },500)
-        */
 
         refreshList()
         
@@ -209,4 +192,3 @@ Notas:
         refreshList()
     }
 </script>    
-
