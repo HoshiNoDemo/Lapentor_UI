@@ -28,3 +28,14 @@ if ( document.all ) {
 } else {
 	element.setAttribute( 'style', 'background-image: url( "http://placekitten.com.s3.amazonaws.com/homepage-samples/96/139.jpg" ) !important' );
 }
+
+
+Tasks:
+	Check for scene change; -> DONE
+	Remove my buttons; -> DONE
+	Remove my button functions; -> DONE
+	Check canvas FOV existance WHEN WE CHANGE SCENES ONLY;
+	Keep reference of current floor (to check for changes);
+	Iterate over floors to find canvas FOV existance;
+	Set maxWidth and maxHeight of #map-floorplan;
+	
