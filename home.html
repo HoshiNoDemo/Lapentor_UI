@@ -16,26 +16,39 @@ Notas:
 <div id="my-view-list" class="Overlayed"></div>
 
 <script>
+    // set up the mutation observer
+    var observer = new MutationObserver(function (mutations, me) {
+        // `mutations` is an array of mutations that occurred
+        // `me` is the MutationObserver instance
+        var floorplan = document.getElementById('PluginFloorplan');
+        if (floorplan) {
+             
+            floorplan.style.paddingTop = "0"
 
-    //Setup
-    var marker_list = []
-    var current_view = ""
-    setTimeout(function(){
-        marker_list = [].slice.call(document.getElementsByClassName("thumb ng-binding ng-scope"))
-        current_view = document.getElementById("PluginScenetitle").innerText
-        //alert(current_view.innerText)
-        //It works!
-    },1000)
+            //Setup
+            var marker_list = []
+            var current_view = ""
 
-    init()
+            marker_list = [].slice.call(document.getElementsByClassName("thumb ng-binding ng-scope"))
+            current_view = document.getElementById("PluginScenetitle").innerText
+            //alert(current_view.innerText)
 
-    //Hide PART of the floorplan
-    hideUI()
-
-    //Initial refresh
-    setTimeout(function(){
+            init()
             refreshList()
-        },1000)
+
+
+            me.disconnect(); // stop observing
+            return;
+        }
+    });
+
+    // start observing
+    observer.observe(document, {
+    childList: true,
+    subtree: true
+    });
+
+
 
     
     function init(){
@@ -75,18 +88,6 @@ Notas:
                 return false;
         }
         return true;
-    }
-
-    /**
-    * Hides the top left scene selection.
-    */
-    function hideUI() {
-        var floorplan = document.getElementById('PluginFloorplan')
-        var x = floorplan.getElementsByClassName("list")
-        
-        x.style.display = "none"
-
-        x.style.paddingTop = "0"
     }
 
 
