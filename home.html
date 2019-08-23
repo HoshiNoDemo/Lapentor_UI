@@ -11,8 +11,8 @@ Notas:
 -->
 
 
-<!--<input class="Overlayed" id="myelement" type="button" value="PRESS ME" onmousedown="hideUI()">-->
-<div id="my-view-list" class="Overlayed">Overlay JSDemoC v0.21</div>
+<!--<input class="Overlayed" id="myelement" type="button" value="PRESS ME" onmousedown="hideUI()">
+<div id="my-view-list" class="Overlayed">Overlay JSDemoC v0.21</div>-->
 
 <script>
 
@@ -20,6 +20,7 @@ Notas:
     //Setup
     var marker_list = []
     var current_view = ""
+    var current_floor = 0
 
     // set up the mutation observer
     var observer = new MutationObserver(function (mutations, me) {
@@ -30,6 +31,10 @@ Notas:
 
             marker_list = [].slice.call(document.getElementsByClassName("thumb ng-binding ng-scope"))
             current_view = document.getElementById("PluginScenetitle").innerText
+            
+            var mapfloorplan = document.querySelector("#map-floorplan")
+            
+
             init()
 
             me.disconnect(); // stop observing
@@ -42,13 +47,9 @@ Notas:
     childList: true,
     subtree: true
     });
+ 
 
-
-
-    
     function init(){
-
-
         //Setup a onmouseup listener to check for room and floor changes
         document.addEventListener("mouseup", function(){
             console.log("Initting.")
@@ -59,25 +60,33 @@ Notas:
 
                     var new_current_view = document.getElementById("PluginScenetitle").innerText
 
-                    if (current_view !== new_current_view){
-                        console.log("We've changed scenes!")
-
-                        /*
-                            TODO check if the canvas FOV is gone, this means we've changed floors!
-                                If canvas is clear: We've moved floors. Iterate through the floors to check if the canvas FOV is now there!
-                                If canvas is occupied: Do nothing.
-                        */
+                    if (current_view && current_view !== new_current_view){
                         if (isCanvasClear(document.getElementById("canvas-map"))){
                             console.log("CHANGED FLOOR!")
                         }
                     }
-                    
                     current_view = new_current_view
                     marker_list = new_marker_list
 
                 },1000)
         })
 
+        document.addEventListener("mousedown", function(event){
+            if(event.target.className == "map-placemarker thumb ng-scope"){
+                console.log("MARKER!")
+
+                var asdf = document.getElementById("PluginFloorplan").getElementsByClassName("list")
+                var asdf2 = asdf[0].children.
+
+                b = Array.prototype.slice.call( asdf2 )
+                current_floor = b.indexOf(b.find(function(element){
+	                return element.className == "thumb ng-binding ng-scope active"
+                }))
+
+                console.log(asdf2)
+            }
+            console.log(event.target)
+        })
     }
 
     function isCanvasClear(canvas){
@@ -107,26 +116,5 @@ Notas:
         } else {
             x.style.display = "none"
         }
-    }
-
-
-    /**
-    * Resets the view to the initial floor and initial view.
-    * The order of which you insert the floors and views in the plugin matter!
-    */
-    function returnToStart() {
-        var x = document.getElementById("PluginFloorplan")
-        var y = x.getElementsByClassName("list")    
-        var z = y[0].children[0]
-    
-        z.click()
-
-        //After 100ms do this.
-        setTimeout(function(){
-            var x = document.getElementById("PluginFloorplan")
-            var y = document.getElementById("map-floorplan")
-            var z = document.getElementsByClassName("map-placemarker thumb ng-scope")
-            z[0].click()
-        },100)
     }
 </script>    

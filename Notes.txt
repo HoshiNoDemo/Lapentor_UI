@@ -35,7 +35,7 @@ Tasks:
 	Remove my buttons; -> DONE
 	Remove my button functions; -> DONE
 	Check canvas FOV existance WHEN WE CHANGE SCENES ONLY; -> DONE
-	Keep reference of current floor (to check for changes); -> DONE!
-	Iterate over floors to find canvas FOV existance;
-	Set maxWidth and maxHeight of #map-floorplan;
+	Keep reference of current floor (to check for changes); -> NO!
+	Iterate over floors to find canvas FOV existance; -> NO!
+	Set maxWidth and maxHeight of #map-floorplan; -> DONE!
 	
