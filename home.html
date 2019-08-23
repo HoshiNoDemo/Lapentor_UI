@@ -66,6 +66,8 @@ Notas:
 
             init()
 
+            //document.getElementsByClassName("map-container")[0].innerHTML += '<span id="loadtoggle" class="Overlayed" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; height: 100%; text-align: center; font-size: 34px; background: white;">[LOADING]</span>'
+
             me.disconnect(); // stop observing
             return;
         }
@@ -91,19 +93,20 @@ Notas:
 
                     if (current_view && current_view !== new_current_view){
                         if (isCanvasClear(document.getElementById("canvas-map"))){
-                            console.log("CHANGED FLOOR!")
+                            console.log("Floor changed!")
 
                             var asdf = document.getElementById("PluginFloorplan").getElementsByClassName("list")
                             var asdf2 = asdf[0].children
-                            //asdf2[current_floor].click()
+                            //asdf2[current_floor].click() //Remove the for and uncomment this if you want the older buggy version.
 
                             for (i = 0; i < mapping.length; i++){
                                 var out = mapping[i].find(function(element){
                                     return element == new_current_view
                                 })
                                 if (out){
-                                    console.log("I FOUND " + out)
+                                    console.log("Found " + out + " !")
                                     asdf2[i].click()
+                                    //document.getElementById("loadtoggle").hidden = true
                                    break; 
                                 }
                             }
@@ -114,7 +117,7 @@ Notas:
                     current_view = new_current_view
                     marker_list = new_marker_list
 
-                },1000)
+                },500)
         })
 
         document.addEventListener("mousedown", function(event){
