@@ -54,7 +54,6 @@ Notas:
                     }
 
                     var new_current_view = document.getElementById("PluginScenetitle").innerText
-                    console.log(current_view + "<->" + new_current_view)
                     if (current_view !== new_current_view){
                         //alert("We've changed scenes!")
                     }
@@ -82,12 +81,12 @@ Notas:
     * Hides the top left scene selection.
     */
     function hideUI() {
-        var floorplan = document.getElementById('PluginFloorPlan')
+        var floorplan = document.getElementById('PluginFloorplan')
         var x = floorplan.getElementsByClassName("list")
         
         x.style.display = "none"
 
-        x.style.padding_top = "0"
+        x.style.paddingTop = "0"
     }
 
 
@@ -100,7 +99,6 @@ Notas:
         floors = floors.getElementsByClassName("thumb ng-binding ng-scope")
 
         for(var i = 0; i < floors.length; i++){
-            console.log(floors[i])
             div.innerHTML += "<input class='Overlayed' style='left: " + (150 + (i*150)) + "px; color: cadetblue;' type='button' value='" + floors[i].innerText + "' onmousedown='goToFloor(" + i + ")'>"
         }            
 
