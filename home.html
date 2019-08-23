@@ -15,7 +15,36 @@ Notas:
 <div id="my-view-list" class="Overlayed">Overlay JSDemoC v0.21</div>-->
 
 <script>
-
+    var mapping = [[
+        "Piso 0 - Loja",
+        "Piso 0 - Hall",
+        "Piso 0 - Cave"
+    ],
+    [
+        "Piso 1 - Circulação",
+        "Piso 1 - Sala comum",
+        "Piso 1 - Hall",
+        "Piso 1 - Quarto 2",
+        "Piso 1 - Quarto 4",
+        "Piso 1 - Quarto 3",
+        "Piso 1 - Pátio",
+        "Piso 1 - Cozinha",
+        "Piso 1 - Circulação 1"
+    ],
+    [
+        "Piso 2 - Circulação",
+        "Piso 2 - Quarto",
+        "Piso 2 - Quarto 2",
+        "Piso 2 - Quarto 1",
+        "Piso 2 - WC",
+        "Piso 2 - Hall"
+    ],
+    [
+        "Piso 3 - Sotão",
+        "Piso 3 - Sotão 1",
+        "Piso 3 - Quarto",
+        "Piso 3 - Balcão"
+    ]]
 
     //Setup
     var marker_list = []
@@ -63,8 +92,25 @@ Notas:
                     if (current_view && current_view !== new_current_view){
                         if (isCanvasClear(document.getElementById("canvas-map"))){
                             console.log("CHANGED FLOOR!")
+
+                            var asdf = document.getElementById("PluginFloorplan").getElementsByClassName("list")
+                            var asdf2 = asdf[0].children
+                            //asdf2[current_floor].click()
+
+                            for (i = 0; i < mapping.length; i++){
+                                var out = mapping[i].find(function(element){
+                                    return element == new_current_view
+                                })
+                                if (out){
+                                    console.log("I FOUND " + out)
+                                    asdf2[i].click()
+                                   break; 
+                                }
+                            }
                         }
                     }
+
+
                     current_view = new_current_view
                     marker_list = new_marker_list
 
@@ -76,14 +122,15 @@ Notas:
                 console.log("MARKER!")
 
                 var asdf = document.getElementById("PluginFloorplan").getElementsByClassName("list")
-                var asdf2 = asdf[0].children.
+                var asdf2 = asdf[0].children
 
                 b = Array.prototype.slice.call( asdf2 )
+
                 current_floor = b.indexOf(b.find(function(element){
 	                return element.className == "thumb ng-binding ng-scope active"
                 }))
 
-                console.log(asdf2)
+                console.log(current_floor)
             }
             console.log(event.target)
         })
