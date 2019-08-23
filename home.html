@@ -58,9 +58,18 @@ Notas:
                     var new_marker_list = [].slice.call(document.getElementsByClassName("map-placemarker thumb ng-scope"))
 
                     var new_current_view = document.getElementById("PluginScenetitle").innerText
+
                     if (current_view !== new_current_view){
                         console.log("We've changed scenes!")
-                        // TODO check if the canvas FOV is gone, this means we've changed floors!
+
+                        /*
+                            TODO check if the canvas FOV is gone, this means we've changed floors!
+                                If canvas is clear: We've moved floors. Iterate through the floors to check if the canvas FOV is now there!
+                                If canvas is occupied: Do nothing.
+                        */
+                        if (isCanvasClear(document.getElementById("canvas-map"))){
+                            console.log("CHANGED FLOOR!")
+                        }
                     }
                     
                     current_view = new_current_view
@@ -69,6 +78,12 @@ Notas:
                 },1000)
         })
 
+    }
+
+    function isCanvasClear(canvas){
+        return !canvas.getContext('2d')
+            .getImageData(0, 0, canvas.width, canvas.height).data
+            .some(channel => channel !== 0);
     }
 
     function htmlEquals(a1, a2) {
