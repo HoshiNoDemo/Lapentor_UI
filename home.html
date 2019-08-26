@@ -11,8 +11,7 @@ Notas:
 -->
 
 
-<!--<input class="Overlayed" id="myelement" type="button" value="PRESS ME" onmousedown="hideUI()">
-<div id="my-view-list" class="Overlayed">Overlay JSDemoC v0.21</div>-->
+<div id="my-view-list" class="Overlayed">Overlay Ammendment v0.3.0</div>
 
 <script>
     var mapping = [[
@@ -62,11 +61,8 @@ Notas:
             current_view = document.getElementById("PluginScenetitle").innerText
             
             var mapfloorplan = document.querySelector("#map-floorplan")
-            
 
             init()
-
-            //document.getElementsByClassName("map-container")[0].innerHTML += '<span id="loadtoggle" class="Overlayed" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; height: 100%; text-align: center; font-size: 34px; background: white;">[LOADING]</span>'
 
             me.disconnect(); // stop observing
             return;
@@ -83,7 +79,7 @@ Notas:
     function init(){
         //Setup a onmouseup listener to check for room and floor changes
         document.addEventListener("mouseup", function(){
-            console.log("Initting.")
+            console.log("Checking for floor changes...")
 
             //Check if current markers were changed
             setTimeout(function(){
@@ -97,22 +93,19 @@ Notas:
 
                             var asdf = document.getElementById("PluginFloorplan").getElementsByClassName("list")
                             var asdf2 = asdf[0].children
-                            //asdf2[current_floor].click() //Remove the for and uncomment this if you want the older buggy version.
-
+                            
                             for (i = 0; i < mapping.length; i++){
                                 var out = mapping[i].find(function(element){
                                     return element == new_current_view
                                 })
                                 if (out){
-                                    console.log("Found " + out + " !")
+                                    console.log("Found \"" + out + "\" at index \""+ i +"\"!")
                                     asdf2[i].click()
-                                    //document.getElementById("loadtoggle").hidden = true
                                    break; 
                                 }
                             }
                         }
                     }
-
 
                     current_view = new_current_view
                     marker_list = new_marker_list
@@ -122,7 +115,7 @@ Notas:
 
         document.addEventListener("mousedown", function(event){
             if(event.target.className == "map-placemarker thumb ng-scope"){
-                console.log("MARKER!")
+                console.log("Marker held down!")
 
                 var asdf = document.getElementById("PluginFloorplan").getElementsByClassName("list")
                 var asdf2 = asdf[0].children
@@ -133,9 +126,7 @@ Notas:
 	                return element.className == "thumb ng-binding ng-scope active"
                 }))
 
-                console.log(current_floor)
             }
-            console.log(event.target)
         })
     }
 
@@ -153,18 +144,5 @@ Notas:
                 return false;
         }
         return true;
-    }
-
-    /**
-    * Hides the top right scene selection.
-    */
-    function hideUI() {
-        var x = document.getElementById('scenelist-ghost')
-        
-        if (x.style.display === "none"){
-            x.style.display = "block"
-        } else {
-            x.style.display = "none"
-        }
     }
 </script>    

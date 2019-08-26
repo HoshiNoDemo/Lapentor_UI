@@ -2,3 +2,8 @@
     position: absolute;
     z-index: 2;
 }
+
+#map-floorplan{
+    max-width: calc(618px*.5) !important;
+    max-height: calc(555px*.45) !important;
+}
