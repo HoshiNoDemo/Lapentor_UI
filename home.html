@@ -26,9 +26,9 @@ Notas:
                     if (current_view && current_view !== new_current_view){
                         if (isCanvasClear(document.getElementById("canvas-map"))){
                             console.log("Floor changed!")
-
-                            var asdf = document.getElementById("PluginFloorplan").getElementsByClassName("list")
-                            var asdf2 = asdf[0].children
+                            
+                            var floorplanList = document.getElementById("PluginFloorplan").getElementsByClassName("list")
+                            var floorplanArr = floorplanList[0].children
                             
                             for (i = 0; i < mapping.length; i++){
                                 var out = mapping[i].find(function(element){
@@ -36,7 +36,7 @@ Notas:
                                 })
                                 if (out){
                                     console.log("Found \"" + out + "\" at index \""+ i +"\"!")
-                                    asdf2[i].click()
+                                    floorplanArr[i].click()
                                    break; 
                                 }
                             }
@@ -52,12 +52,12 @@ Notas:
             if(event.target.className == "map-placemarker thumb ng-scope"){
                 console.log("Marker held down!")
 
-                var asdf = document.getElementById("PluginFloorplan").getElementsByClassName("list")
-                var asdf2 = asdf[0].children
+                var floorplanList = document.getElementById("PluginFloorplan").getElementsByClassName("list")
+                var floorplanArr = floorplanList[0].children
 
-                b = Array.prototype.slice.call( asdf2 )
+                floorplanArr2 = Array.prototype.slice.call( floorplanArr )
 
-                current_floor = b.indexOf(b.find(function(element){
+                current_floor = floorplanArr2.indexOf(floorplanArr2.find(function(element){
 	                return element.className == "thumb ng-binding ng-scope active"
                 }))
 

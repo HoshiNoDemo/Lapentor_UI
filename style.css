@@ -1,7 +1,7 @@
-.Overlayed {
+/* .Overlayed {
     position: absolute;
     z-index: 2;
-}
+} */
 
 #map-floorplan{
     max-width: calc(618px*.5) !important;
